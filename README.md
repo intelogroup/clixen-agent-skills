@@ -28,3 +28,21 @@ npx skills update
 ## License
 
 MIT
+
+
+## Auto-sync
+
+Skills from upstream providers (Supabase, Neon, Vercel, NVIDIA, ...) are
+mirrored daily via `.github/workflows/sync.yml`. The pipeline clones each
+source repo listed in `sources.yml`, copies `SKILL.md` files into
+`vendor/<namespace>/`, and commits if anything changed.
+
+Manual sync:
+```bash
+python scripts/sync.py          # sync all
+python scripts/sync.py --dry    # preview
+```
+
+Vendor skills live under `vendor/` and are namespaced (e.g.
+`vendor/supabase/supabase/`). They are kept up to date automatically —
+do not edit them by hand.

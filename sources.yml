@@ -1,0 +1,20 @@
+# Source repos whose skills/ directories are mirrored into this catalog.
+# The sync pipeline (scripts/sync.py) clones each, copies SKILL.md files
+# under the given namespace, and commits if anything changed.
+sources:
+  - repo: supabase/agent-skills
+    branch: main
+    path: skills
+    namespace: supabase
+  - repo: neondatabase/agent-skills
+    branch: main
+    path: skills
+    namespace: neon
+  - repo: vercel-labs/agent-skills
+    branch: main
+    path: skills
+    namespace: vercel
+  - repo: nvidia/skills
+    branch: main
+    path: skills
+    namespace: nvidia
