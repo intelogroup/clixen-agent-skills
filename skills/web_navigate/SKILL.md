@@ -26,10 +26,14 @@ sticky bars, lazy layout. Work this order, every time.
    them. Dismiss them first, under these strict rules — no exceptions:
    - The control must be a real button (or role=button), not a link or
      a text match inside an article.
-   - Its accessible name must EXACTLY match the dismiss lexicon:
-     Accept / Accept all / Reject all / Agree / Close / Dismiss /
-     Got it / Continue / No thanks. Never substring-match names —
-     "closed border" in a headline is not a Close button.
+   - Its accessible name must match the dismiss rule: an exact
+     lexicon hit (Accept / Accept all / Reject all / Agree / Close /
+     Dismiss / Got it / Continue / No thanks), OR a verb-first name —
+     first word in {dismiss, close, accept, reject, agree, continue},
+     at most ~6 words, every remaining word a notice-noun (privacy,
+     cookie, consent, notice, banner, all…). Real example: "Dismiss
+     privacy notice". Never substring-match names — "closed border"
+     in a headline is not a Close button.
    - It must sit inside the overlay container (fixed-position layer),
      not in page content.
    - Prefer Reject all over Accept all when both exist and the task
@@ -88,11 +92,16 @@ submits, pays, or posts by itself.
   (searchbox present), YouTube via AX (button), The Verge ONLY via DOM
   fusion (287 DOM nodes the AX pass missed; search textbox among them).
   Fusion (step 2) is load-bearing, not optional.
-- 2026-10-26 · Consent in an iframe: The Verge served a consent
-  overlay, but NO strict candidate — its buttons don't live in the
-  main frame's tree (Vox CMP runs in an iframe). Perception must
-  enumerate frames, or dismissal silently finds nothing. Real-banner
-  dismissal end-to-end: still UNTESTED.
+- 2026-10-26 · Real banner dismissal: WORKED end-to-end on The Verge.
+  Correction to the earlier iframe guess (same day): frame enumeration
+  found exactly ONE frame — the PMC privacy banner lives in the main
+  document, and its control is a BUTTON aria-labelled "Dismiss
+  privacy notice" inside the banner. The exact-name lexicon missed it;
+  the verb-first + notice-noun rule (step 3, amended) qualifies it.
+  Protocol run: perceive → announce → beat → revalidate → click →
+  banner gone, URL unchanged. VERIFIED. (Frame enumeration is still
+  worth having — other CMPs do use iframes — but it was not the
+  blocker here; name-matching was.)
 - 2026-10-26 · Unreachable from the sandbox egress (not perception
   failures): Guardian timed out; Reddit served a "Prove your humanity"
   bot wall (6 nodes); eBay a bot error page; CNN a blank. These sites
