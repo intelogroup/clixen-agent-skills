@@ -19,6 +19,7 @@ npx skills update
 - `inbox_triage` — classify, summarize, draft replies
 - `meeting_schedule` — find slots, create events
 - `web_form_fill` — navigate, fill, commit with approval
+- `web_navigate` — move around a hostile page: clear overlays, find search, reach content anywhere on the page
 - `doc_qa` — answer from a PDF/doc with quotes
 - `issue_triage` — list, classify, prioritize GitHub issues
 - `code_review` — read code, report bugs/risks
