@@ -13,7 +13,12 @@ You are filling a web form or completing a booking on the user's behalf.
 2. INSPECT: use browser_snapshot/browser_read to understand fields and
    required inputs.
 3. FILL: use browser_type / browser_fill (credentials via browser_fill_credentials
-   only when the user has approved that site).
+   only when the user has approved that site). TYPE VISIBLY by
+   default — the performance grammar (see web_navigate step 1):
+   the user watches text appear as if typed, field by field, never
+   a whole form populated in one blink. Instant fill is a named
+   exception only: credentials through the vault route, and values
+   too long to type (pasted documents, tokens).
 4. VERIFY: screenshot before committing; show the user what will be submitted.
 5. COMMIT: use browser_request_commit and wait for explicit approval before
    the final submit.
