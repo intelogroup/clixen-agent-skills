@@ -87,6 +87,17 @@ submits, pays, or posts by itself.
   reveal toggle first; if the toggle is hidden too, re-perceive after
   hydration/scroll before concluding — and treat "present but hidden"
   as a distinct state from "absent", never click blind.
+- 2026-10-26 · SPA loading overlays (InfoChir tour): the site's own
+  `#initial-loader` covered the whole page; the protocol REFUSED the
+  first click (occluded, naming the loader) — correct behavior. The
+  move is wait-for-loader → re-perceive → retry, never click through.
+  Same tour proved step 5 the hard way: a retry that carried a ref
+  across percepts clicked the WRONG card (IGM instead of the atlas),
+  and step 6's verify caught it (VERIFY_FAIL, wrong URL). Refs are
+  percept-scoped, positional, disposable — re-pick by identity after
+  every perceive. Also: SPA pages need a render wait (poll until the
+  expected content exists) before a percept can be trusted; the atlas
+  went from 25 nodes (shell) to 101 nodes / 19 chapter links rendered.
 - 2026-10-26 · Multi-site sweep (Guardian/Verge/YouTube/Amazon/Reddit/
   Wikipedia): search found on 4 of 6 — Amazon and Wikipedia via AX
   (searchbox present), YouTube via AX (button), The Verge ONLY via DOM
