@@ -11,11 +11,18 @@ You are operating a page the user can see (Clixen Desktop) or a browser
 session on their behalf. Pages fight back: consent banners, popups,
 sticky bars, lazy layout. Work this order, every time.
 
-1. PERCEIVE THE WHOLE PAGE, NOT THE VIEWPORT. Your snapshot covers the
-   full document, including everything below the fold. Never
-   scroll-and-search for something your snapshot already contains —
-   resolve the target directly and let it come into view in one move.
-   The user sees one screenful; you know the whole page. Act like it.
+1. PERCEIVE THE WHOLE PAGE, NOT THE VIEWPORT — BUT TRAVEL LIKE A
+   HUMAN. Your snapshot covers the full document, including
+   everything below the fold. Use that knowledge to PLAN, never to
+   teleport. Clixen is not an agent-browser: perception may be
+   instant and programmatic, PERFORMANCE IS HUMAN — visible actions
+   a human would take, at a pace a human can follow. Scroll in
+   steps until the target arrives in view (never resolve-and-jump),
+   click the real control a human would click (the Search button,
+   not the Enter shortcut; the link, not a scripted navigation),
+   type visibly. The user sees one screenful; you know the whole
+   page. Plan like it — move like them. (Performance grammar, Jim,
+   2026-10-26.)
 2. FUSE YOUR SOURCES. An accessibility snapshot can miss controls that
    exist in the DOM (hidden until toggled, marked ignored). If a target
    that should exist (search, menu, close) is absent from the snapshot,
@@ -38,6 +45,32 @@ sticky bars, lazy layout. Work this order, every time.
      not in page content.
    - Prefer Reject all over Accept all when both exist and the task
      doesn't need the site's features.
+   - CONSENT LADDER (2026-10-26): consent is the human's to give, so
+     on a cookie/consent banner take the least-permissive exit that
+     keeps the page usable, in this order: (1) Refuse / Reject all;
+     (2) Necessary / essential only — many banners offer Accept all +
+     Necessary only with NO Refuse all, and tier 2 is the answer
+     there, never tier 4; (3) Close / Dismiss (no consent decision);
+     (3.5) ESCAPE TRICKS (Jim, 2026-10-26) — no sanctioned exit, but
+     the site is still needed: first click OUTSIDE the banner (one
+     neutral click on a non-interactive page area; some banners
+     dismiss themselves), then HUNT inside the banner for any
+     element whose click deletes it — an unlabelled ×, an icon, a
+     span with a pointer cursor — x-like and corner elements first,
+     one candidate at a time. The hunt NEVER clicks a consent
+     control, and a click that navigates stops it at once. Verify
+     after: banner gone, URL unchanged, and no consent granted as a
+     side effect — deleting a banner is not accepting its cookies.
+     Only when both tricks fail does the card come out;
+     (4) Accept all — NEVER auto-clicked. If Accept all is the only
+     way through, STOP and ask the human — the buddy puts up a CARD
+     with the question and the choices as buttons ("Accept all
+     cookies" / "Leave the site") and waits; the human's pick IS
+     the authorization, and no pick (timeout) is NOT a yes. Their
+     consent is not yours to grant. Default posture stays keen to
+     refuse: tiers 1–3 never need the human. The existing "Prefer
+     Reject all" line is tier 1 of this ladder, not the whole
+     policy.
    - After dismissing, verify: the overlay is gone AND the page URL
      did not change. If the URL changed, you clicked content, not the
      overlay — say so and recover, don't pretend it worked.
@@ -122,3 +155,39 @@ submits, pays, or posts by itself.
   article. The exact-name + inside-overlay + URL-unchanged rules above
   are the fix; a real consent banner end-to-end is still UNTESTED
   (BBC served none to the test egress; CNN/eBay unreachable there).
+- 2026-10-26 · Consent ladder (step 3): fixture-proven in the probe
+  (consent.py + test_consent.py). Variant A (Accept all + Necessary
+  only, no Refuse all) → picked Necessary, site recorded
+  consent=necessary. Variant B (Accept all + Close ×) → closed,
+  consent=none. Variant C (Accept all ONLY) → ask_human, banner left
+  untouched, consent stayed undecided. Before the ladder, "Accept
+  all cookies" matched the verb-first dismiss rule and could be
+  picked over the minimal option sitting next to it — a consent
+  grant the user never made. A live-site banner run is still owed.
+- 2026-10-26 · Buddy ask-card (step 3, tier 4): Jim's design — when
+  the ladder reaches ask_human, the buddy shows a card (question +
+  choice buttons, agent overlay band so the mutation alarm ignores
+  it) and WAITS. Probe-proven both ways (ask.py + test_ask.py):
+  pick "Accept all cookies" → agent clicks it, outcome recorded as
+  the USER's pick, consent=all; pick "Leave the site" → nothing
+  clicked, consent stayed undecided, banner left standing. Timeout
+  returns no pick, and no pick is not a yes.
+- 2026-10-26 · Consent escape tricks (step 3, tier 3.5): Jim's two
+  tricks for enforced-cookie banners, probe-proven (escapes.py +
+  test_escapes.py; fixtures D/E, both ladder-dead-ends at
+  ask_human). D (unlabelled span ✕ deletes the banner): click
+  outside correctly failed, the hunt deleted it via the span on the
+  first try, the Accept button never touched, badge stayed
+  consent=undecided, URL unchanged. E (banner self-dismisses on
+  outside click): click_outside alone won, consent undecided. The
+  ask-card is now the LAST resort, after tiers 1–3.5 all fail.
+- 2026-10-26 · Wikipedia mission (Jim's serious test): PASSED
+  end-to-end on the live site — home → search "Portugal history" →
+  open History of Portugal → scroll to the "Second Punic War"
+  mention → it was a link → click → Second Punic War article →
+  browser back → History of Portugal again, every step VERIFIED.
+  Quirk worth keeping: the Vector search box + Enter does NOT land
+  on a results page; it opens the suggestion list, whose top item
+  is named "History of Portugal (Redirected from
+  Portugal/History)" — match the article by name PREFIX, not exact
+  name, or the mission stalls one step from done.
