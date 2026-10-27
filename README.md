@@ -46,4 +46,6 @@ python scripts/sync.py --dry    # preview
 
 Vendor skills live under `vendor/` and are namespaced (e.g.
 `vendor/supabase/supabase/`). They are kept up to date automatically —
-do not edit them by hand.
+do not edit them by hand. Which vendored skills this runtime can
+execute directly (and which run from a documented composition
+instead) is recorded in `runtime-coverage.yml`.
