@@ -1,0 +1,33 @@
+# Runtime coverage for vendored skills (hardening plan W6, 2026-10-27).
+#
+# Vendored files under vendor/ are mirrored by scripts/sync.py and
+# must not be edited by hand — so coverage lives HERE, not in their
+# frontmatter. "executable" means this runtime can run the skill's
+# commands directly; "composition" means the skill is procedure-only
+# here and runs from the recipe its own SKILL.md documents. Level-2
+# tests found the gap this file exists to make visible: the
+# upstream `gws workflow` one-shot helpers are refused by the
+# connector CLI, so the two workflow skills are composition-only
+# until that changes. test_level2_learning.py reads this file: an
+# "executable" claim that stops executing fails the suite.
+coverage:
+  googleworkspace/gws-shared:            { executable: true,  via: "gws auth + global flags" }
+  googleworkspace/gws-gmail:             { executable: true,  via: "gws gmail" }
+  googleworkspace/gws-gmail-triage:      { executable: true,  via: "gws gmail +triage" }
+  googleworkspace/gws-gmail-read:        { executable: true,  via: "gws gmail +read" }
+  googleworkspace/gws-gmail-send:        { executable: true,  via: "gws gmail +send" }
+  googleworkspace/gws-gmail-reply:       { executable: true,  via: "gws gmail +reply" }
+  googleworkspace/gws-gmail-reply-all:   { executable: true,  via: "gws gmail +reply-all" }
+  googleworkspace/gws-gmail-forward:     { executable: true,  via: "gws gmail +forward" }
+  googleworkspace/gws-gmail-watch:       { executable: true,  via: "gws gmail +watch" }
+  googleworkspace/gws-calendar:          { executable: true,  via: "gws calendar" }
+  googleworkspace/gws-calendar-agenda:   { executable: true,  via: "gws calendar +agenda" }
+  googleworkspace/gws-calendar-insert:   { executable: true,  via: "gws calendar +insert" }
+  googleworkspace/gws-workflow-meeting-prep:
+    executable: false
+    mode: composition
+    recipe: "next event's full record via gws calendar events list (attendees, description)"
+  googleworkspace/gws-workflow-weekly-digest:
+    executable: false
+    mode: composition
+    recipe: "gws calendar +agenda (week) combined with gws gmail +triage, per the skill's Tips"

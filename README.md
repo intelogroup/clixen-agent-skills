@@ -33,7 +33,7 @@ MIT
 
 ## Auto-sync
 
-Skills from upstream providers (Supabase, Neon, Vercel, NVIDIA, ...) are
+Skills from upstream providers (Supabase, Neon, Vercel, NVIDIA, Google Workspace, ...) are
 mirrored daily via `.github/workflows/sync.yml`. The pipeline clones each
 source repo listed in `sources.yml`, copies `SKILL.md` files into
 `vendor/<namespace>/`, and commits if anything changed.
@@ -46,4 +46,6 @@ python scripts/sync.py --dry    # preview
 
 Vendor skills live under `vendor/` and are namespaced (e.g.
 `vendor/supabase/supabase/`). They are kept up to date automatically —
-do not edit them by hand.
+do not edit them by hand. Which vendored skills this runtime can
+execute directly (and which run from a documented composition
+instead) is recorded in `runtime-coverage.yml`.

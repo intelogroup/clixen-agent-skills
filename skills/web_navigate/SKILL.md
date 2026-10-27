@@ -121,6 +121,20 @@ sticky bars, lazy layout. Work this order, every time.
      photography while a password field is rendered or the card
      is up. Verify sign-ins from the tree, never from pictures.
 
+9. VERIFY AGAINST STATE, NEVER AGAINST THE ANNOUNCEMENT. Every
+   action ends in a verification, and the verification reads the
+   state the action was meant to change — the counter, the cart
+   total, the saved record, the URL — never the page's own success
+   claim. Pages lie: a banner that cries "Order placed!" while
+   nothing was ordered is a real, tested pattern (2026-10-27: the
+   badge said placed, the orders counter said zero, and only the
+   counter told the truth). A toast, badge or checkmark that the
+   clicked control itself produces is evidence of nothing. If the
+   state did not change, the action FAILED — say so, re-plan or
+   escalate; never report the announcement as the outcome. Name
+   the evidence in the receipt (verified_by): what you observed
+   change.
+
 Hand-offs: a form or booking in front of you → web_form_fill (its
 approval gate owns the commit). Reading/research synthesis →
 research_brief. This skill is movement and page control only; it never
