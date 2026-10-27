@@ -33,7 +33,7 @@ MIT
 
 ## Auto-sync
 
-Skills from upstream providers (Supabase, Neon, Vercel, NVIDIA, ...) are
+Skills from upstream providers (Supabase, Neon, Vercel, NVIDIA, Google Workspace, ...) are
 mirrored daily via `.github/workflows/sync.yml`. The pipeline clones each
 source repo listed in `sources.yml`, copies `SKILL.md` files into
 `vendor/<namespace>/`, and commits if anything changed.

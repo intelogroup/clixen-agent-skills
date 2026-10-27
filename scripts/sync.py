@@ -61,9 +61,12 @@ def sync_source(src: dict) -> int:
         shutil.rmtree(dest_dir)
     dest_dir.mkdir(parents=True, exist_ok=True)
 
+    include = src.get("include")
     count = 0
     for skill_dir in sorted(src_dir.iterdir()):
         if not skill_dir.is_dir():
+            continue
+        if include and skill_dir.name not in include:
             continue
         skill_md = skill_dir / "SKILL.md"
         if not skill_md.exists():
@@ -85,6 +88,8 @@ def sync_source(src: dict) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--source", metavar="NAMESPACE",
+                    help="sync only the source with this namespace")
     args = ap.parse_args()
 
     if not SOURCES.exists():
@@ -97,6 +102,8 @@ def main() -> int:
 
     total = 0
     for src in sources:
+        if args.source and src.get("namespace") != args.source:
+            continue
         total += sync_source(src)
 
     # Clean up empty vendor dir
