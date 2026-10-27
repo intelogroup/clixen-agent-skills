@@ -20,6 +20,9 @@ You are filling a web form or completing a booking on the user's behalf.
    exception only: credentials through the vault route, and values
    too long to type (pasted documents, tokens).
 4. VERIFY: screenshot before committing; show the user what will be submitted.
+   Exception: on a sign-in form the screenshot gate refuses
+   photography — verify by field readback and the post-submit
+   state instead (the vault flow is web_navigate step 8).
 5. COMMIT: use browser_request_commit and wait for explicit approval before
    the final submit.
 

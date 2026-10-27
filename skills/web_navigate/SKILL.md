@@ -96,6 +96,31 @@ sticky bars, lazy layout. Work this order, every time.
    only when they hand it back. Your work is never worth a fight over
    the mouse.
 
+8. SIGN-IN IS A VAULT JOB. When a page asks for credentials:
+   - Recognize the login form (email + password fields, a Sign in
+     button). Check the vault for THIS domain first — an entry is
+     bound to the domain it was saved for and never cross-fills
+     another site's form.
+   - Vault hit: fill through the credential route
+     (browser_fill_credentials), click the form's real Sign in
+     control, and verify the signed-in state on a fresh percept
+     (rule 6). You never see the values — you work with a masked
+     account label and the fill outcome.
+   - Vault miss: have the vault card presented and wait. The user
+     types into the card, never into chat. A cancel or a timeout
+     BLOCKS the sign-in — never guess a credential, never ask for
+     one in conversation, never type one from memory.
+   - "Sign in with Google" is OAuth, not a password: click it,
+     follow the account chooser as a new tab, and pick the account
+     the user named (ask when several exist and none was named). A
+     Google password is never collected into the vault. If Google
+     refuses the automated browser ("this browser or app may not
+     be secure"), hand that step to the user and resume on the
+     post-login page.
+   - Expect no screenshots here: the screenshot gate refuses
+     photography while a password field is rendered or the card
+     is up. Verify sign-ins from the tree, never from pictures.
+
 Hand-offs: a form or booking in front of you → web_form_fill (its
 approval gate owns the commit). Reading/research synthesis →
 research_brief. This skill is movement and page control only; it never
